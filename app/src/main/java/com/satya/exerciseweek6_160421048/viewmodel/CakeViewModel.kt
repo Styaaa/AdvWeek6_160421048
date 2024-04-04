@@ -25,7 +25,7 @@ class CakeViewModel(application: Application):AndroidViewModel(application) {
         cakeLoadErrorLD.value = false
 
         queue = Volley.newRequestQueue(getApplication())
-        val url = "http://localhost/cake/cake.json"
+        val url = "http://10.12.142.95/cake/cake.json"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,

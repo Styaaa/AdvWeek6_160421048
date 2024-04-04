@@ -1,8 +1,10 @@
 package com.satya.exerciseweek6_160421048.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,16 @@ class CakeListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentCakeListBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +48,8 @@ class CakeListFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
 
             viewModel.refresh()
+
+//            binding.refreshLayout.isRefreshing = false
             binding.refreshLayout.isRefreshing = false
         }
     }
@@ -45,8 +59,15 @@ class CakeListFragment : Fragment() {
             cakeListAdapter.updateCakeList(it)
         })
 
-//        viewModel.cakeLoadErrorLD.observe(viewLifecycleOwner, Observer {
-//
-//        })
+        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
+            if(it == true) {
+                binding.recyclerView.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+            }
+        })
+
     }
 }

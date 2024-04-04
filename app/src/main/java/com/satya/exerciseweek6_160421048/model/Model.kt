@@ -8,6 +8,6 @@ data class Cake(
     @SerializedName("description")
 
     val desc: String?,
-    val ingredients: String?,
+    val ingredients: List<String>?,
     val images: String?
 )

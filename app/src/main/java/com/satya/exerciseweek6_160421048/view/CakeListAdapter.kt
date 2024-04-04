@@ -23,7 +23,14 @@ class CakeListAdapter(val cakeList:ArrayList<Cake>):RecyclerView.Adapter<CakeLis
 
     override fun onBindViewHolder(holder: CakeViewHolder, position: Int) {
         holder.binding.txtNama.text = cakeList[position].name
-        holder.binding.txtIngridient.text = cakeList[position].ingredients
+//        holder.binding.txtIngridient.text = cakeList[position].ingredients
+
+        cakeList[position].ingredients?.let { ingredients ->
+            holder.binding.txtIngridient.text = ingredients.joinToString(", ")
+        } ?: run {
+            holder.binding.txtIngridient.text = "N/A"
+            }
+
         holder.binding.txtDesc.text = cakeList[position].desc
 
         val url = cakeList[position].images
@@ -32,8 +39,6 @@ class CakeListAdapter(val cakeList:ArrayList<Cake>):RecyclerView.Adapter<CakeLis
             exception.printStackTrace()
         }
         Picasso.get().load(url).into(holder.binding.imgCake)
-
-
     }
 
     override fun getItemCount(): Int {
